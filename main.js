@@ -58,12 +58,35 @@ inputBox.addEventListener("input", updateCoffees);
 
 const newCoffeeInput = document.getElementById("new-coffee-name");
 const roastSelect = document.getElementById("roast");
-const addButton = document.getElementById("submit");
-addButton.addEventListener("click", () => {
+const searchForm = document.getElementById("search-form");
+const addForm = document.getElementById("add-form");
+const roastSelection = document.querySelector("#roast-selection");
+
+newCoffeeInput.addEventListener("input", () => {
+  newCoffeeInput.setCustomValidity("");
+});
+
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  updateCoffees();
+});
+
+addForm.addEventListener("submit", (event) => {
+  event.preventDefault();
   const name = newCoffeeInput.value.trim();
   const roast = roastSelect.value.toLowerCase();
-  if (!name || !allowedRoasts.has(roast)) {
+  const duplicateName = coffees.some(
+    (coffee) => coffee.name.toLowerCase() === name.toLowerCase(),
+  );
+
+  if (!name || name.length > 80 || !allowedRoasts.has(roast)) {
     newCoffeeInput.setCustomValidity("Enter a coffee name and valid roast.");
+    newCoffeeInput.reportValidity();
+    return;
+  }
+
+  if (duplicateName) {
+    newCoffeeInput.setCustomValidity("That coffee already exists.");
     newCoffeeInput.reportValidity();
     return;
   }
@@ -80,10 +103,7 @@ addButton.addEventListener("click", () => {
 });
 
 const coffeeList = document.querySelector("#coffee-list");
-const submitButton = document.querySelector("#searchbtn");
-const roastSelection = document.querySelector("#roast-selection");
 
 coffees.sort((firstCoffee, secondCoffee) => firstCoffee.id - secondCoffee.id);
-submitButton.addEventListener("click", updateCoffees);
 roastSelection.addEventListener("change", updateCoffees);
 updateCoffees();

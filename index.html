@@ -21,9 +21,9 @@
           <div id="coffee-list" aria-live="polite"></div>
         </div>
         <div class="col">
-          <form class="Form">
+          <form id="search-form" class="Form">
             <label for="roast-selection">Roast</label>
-            <select id="roast-selection" class="form-control">
+            <select id="roast-selection" class="form-control" required>
               <option>All</option>
               <option>light</option>
               <option>medium</option>
@@ -37,16 +37,19 @@
                 type="text"
                 class="form-control"
                 placeholder="Coffee Name"
+                maxlength="80"
               />
             </div>
-            <input id="searchbtn" type="button" value="Search" />
+            <button id="searchbtn" type="submit">Search</button>
+          </form>
 
+          <form id="add-form" class="Form">
             <hr />
 
             <h2 class="text-center mt-4">Add a Coffee</h2>
 
             <label for="roast">Roast</label>
-            <select id="roast" class="form-control">
+            <select id="roast" class="form-control" required>
               <option>Light</option>
               <option>Medium</option>
               <option>Dark</option>
@@ -59,9 +62,11 @@
                 class="form-control"
                 id="new-coffee-name"
                 placeholder="Coffee Name"
+                maxlength="80"
+                required
               />
             </div>
-            <input id="submit" type="button" value="Add Coffee" />
+            <button id="submit" type="submit">Add Coffee</button>
           </form>
           <h2 class="text-center mt-5">Coffee runs on sustainability</h2>
           <img
