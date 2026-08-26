@@ -1,6 +1,34 @@
 "use strict";
 
 const allowedRoasts = new Set(["light", "medium", "dark"]);
+const storageKey = "coffee-project-coffees";
+
+function isValidCoffee(coffee) {
+  return (
+    coffee &&
+    Number.isInteger(coffee.id) &&
+    coffee.id > 0 &&
+    typeof coffee.name === "string" &&
+    coffee.name.trim().length > 0 &&
+    coffee.name.length <= 80 &&
+    allowedRoasts.has(coffee.roast)
+  );
+}
+
+function loadCoffees(defaultCoffees) {
+  try {
+    const storedCoffees = JSON.parse(localStorage.getItem(storageKey));
+    if (Array.isArray(storedCoffees) && storedCoffees.every(isValidCoffee)) {
+      return storedCoffees;
+    }
+  } catch {}
+
+  return defaultCoffees;
+}
+
+function saveCoffees() {
+  localStorage.setItem(storageKey, JSON.stringify(coffees));
+}
 
 function renderCoffee(coffee) {
   const coffeeElement = document.createElement("article");
@@ -36,7 +64,7 @@ function updateCoffees() {
   coffeeList.replaceChildren(renderCoffees(filteredCoffees));
 }
 
-const coffees = [
+const defaultCoffees = [
   { id: 1, name: "Light City", roast: "light" },
   { id: 2, name: "Half City", roast: "light" },
   { id: 3, name: "Cinnamon", roast: "light" },
@@ -52,6 +80,8 @@ const coffees = [
   { id: 13, name: "Italian", roast: "dark" },
   { id: 14, name: "French", roast: "dark" },
 ];
+
+const coffees = loadCoffees(defaultCoffees);
 
 const inputBox = document.getElementById("inputbox");
 inputBox.addEventListener("input", updateCoffees);
@@ -98,6 +128,7 @@ addForm.addEventListener("submit", (event) => {
     roast,
   };
   coffees.push(newCoffee);
+  saveCoffees();
   newCoffeeInput.value = "";
   updateCoffees();
 });
