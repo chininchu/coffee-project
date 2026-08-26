@@ -61,6 +61,10 @@ function updateCoffees() {
     return matchesRoast && matchesName;
   });
 
+  const coffeeLabel = filteredCoffees.length === 1 ? "coffee" : "coffees";
+  coffeeStatus.textContent = filteredCoffees.length
+    ? `${filteredCoffees.length} ${coffeeLabel} found.`
+    : "No coffees found.";
   coffeeList.replaceChildren(renderCoffees(filteredCoffees));
 }
 
@@ -134,6 +138,7 @@ addForm.addEventListener("submit", (event) => {
 });
 
 const coffeeList = document.querySelector("#coffee-list");
+const coffeeStatus = document.querySelector("#coffee-status");
 
 coffees.sort((firstCoffee, secondCoffee) => firstCoffee.id - secondCoffee.id);
 roastSelection.addEventListener("change", updateCoffees);
