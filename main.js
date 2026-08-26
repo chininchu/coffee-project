@@ -30,6 +30,7 @@ function saveCoffees() {
   localStorage.setItem(storageKey, JSON.stringify(coffees));
 }
 
+// Build one coffee card without exposing the internal id to the page.
 function renderCoffee(coffee) {
   const coffeeElement = document.createElement("article");
   coffeeElement.className = "coffee";
@@ -51,6 +52,7 @@ function renderCoffees(coffees) {
   return fragment;
 }
 
+// Apply both filters and replace the list with the current results.
 function updateCoffees() {
   const selectedRoast = roastSelection.value.toLowerCase();
   const searchTerm = inputBox.value.trim().toLowerCase();
@@ -114,6 +116,7 @@ addForm.addEventListener("submit", (event) => {
     (coffee) => coffee.name.toLowerCase() === name.toLowerCase(),
   );
 
+  // Prevent incomplete entries and keep roast values consistent.
   if (!name || name.length > 80 || !allowedRoasts.has(roast)) {
     newCoffeeInput.setCustomValidity("Enter a coffee name and valid roast.");
     newCoffeeInput.reportValidity();
@@ -128,6 +131,7 @@ addForm.addEventListener("submit", (event) => {
 
   newCoffeeInput.setCustomValidity("");
   const newCoffee = {
+    // Generate the next id while keeping ids hidden from the UI.
     id: Math.max(...coffees.map((coffee) => coffee.id), 0) + 1,
     name,
     roast,
