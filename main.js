@@ -1,25 +1,39 @@
 "use strict";
 
+const allowedRoasts = new Set(["light", "medium", "dark"]);
+
 function renderCoffee(coffee) {
-  return `
-        <div class="coffee">
-            <h1>${coffee.name}</h1>
-            <p>${coffee.roast}</p>
-        </div>
-    `;
+  const coffeeElement = document.createElement("article");
+  coffeeElement.className = "coffee";
+
+  const nameElement = document.createElement("h4");
+  nameElement.textContent = coffee.name;
+  coffeeElement.appendChild(nameElement);
+
+  const roastElement = document.createElement("p");
+  roastElement.textContent = coffee.roast;
+  coffeeElement.appendChild(roastElement);
+
+  return coffeeElement;
 }
 
 function renderCoffees(coffees) {
-  return coffees.map(renderCoffee).join("");
+  const fragment = document.createDocumentFragment();
+  coffees.forEach((coffee) => fragment.appendChild(renderCoffee(coffee)));
+  return fragment;
 }
 
-function updateCoffees(e) {
-  e.preventDefault();
-  const selectedRoast = roastSelection.value;
-  const filteredCoffees = coffees.filter(
-    (coffee) => coffee.roast === selectedRoast
-  );
-  tbody.innerHTML = renderCoffees(filteredCoffees);
+function updateCoffees() {
+  const selectedRoast = roastSelection.value.toLowerCase();
+  const searchTerm = inputBox.value.trim().toLowerCase();
+  const filteredCoffees = coffees.filter((coffee) => {
+    const matchesRoast =
+      selectedRoast === "all" || coffee.roast === selectedRoast;
+    const matchesName = coffee.name.toLowerCase().includes(searchTerm);
+    return matchesRoast && matchesName;
+  });
+
+  coffeeList.replaceChildren(renderCoffees(filteredCoffees));
 }
 
 const coffees = [
@@ -40,30 +54,36 @@ const coffees = [
 ];
 
 const inputBox = document.getElementById("inputbox");
-inputBox.addEventListener("keyup", () => {
-  const inputValue = inputBox.value.toUpperCase();
-  const filteredCoffees = coffees.filter((coffee) =>
-    coffee.name.toUpperCase().includes(inputValue)
-  );
-  tbody.innerHTML = renderCoffees(filteredCoffees);
-});
+inputBox.addEventListener("input", updateCoffees);
 
 const newCoffeeInput = document.getElementById("new-coffee-name");
 const roastSelect = document.getElementById("roast");
 const addButton = document.getElementById("submit");
 addButton.addEventListener("click", () => {
+  const name = newCoffeeInput.value.trim();
+  const roast = roastSelect.value.toLowerCase();
+  if (!name || !allowedRoasts.has(roast)) {
+    newCoffeeInput.setCustomValidity("Enter a coffee name and valid roast.");
+    newCoffeeInput.reportValidity();
+    return;
+  }
+
+  newCoffeeInput.setCustomValidity("");
   const newCoffee = {
-    id: coffees.length + 1,
-    name: newCoffeeInput.value,
-    roast: roastSelect.value,
+    id: Math.max(...coffees.map((coffee) => coffee.id), 0) + 1,
+    name,
+    roast,
   };
   coffees.push(newCoffee);
-  tbody.innerHTML = renderCoffees(coffees);
+  newCoffeeInput.value = "";
+  updateCoffees();
 });
 
-const tbody = document.querySelector("#coffees");
+const coffeeList = document.querySelector("#coffee-list");
 const submitButton = document.querySelector("#searchbtn");
 const roastSelection = document.querySelector("#roast-selection");
 
-tbody.innerHTML = renderCoffees(coffees);
+coffees.sort((firstCoffee, secondCoffee) => firstCoffee.id - secondCoffee.id);
 submitButton.addEventListener("click", updateCoffees);
+roastSelection.addEventListener("change", updateCoffees);
+updateCoffees();
