@@ -1,13 +1,80 @@
-/* Removed the empty ruleset */
+:root {
+  --coffee-brown: #3d2418;
+  --coffee-cream: #fff8ed;
+  --coffee-orange: #c65d2e;
+  --coffee-border: #e8d8c5;
+}
 
 #searchbtn,
 #submit {
-  background-color: yellow;
+  background-color: var(--coffee-orange);
+  border: 0;
+  border-radius: 0.35rem;
+  color: white;
+  font-weight: 600;
+  margin-top: 1rem;
+  padding: 0.65rem 1rem;
   width: 100%;
+}
+
+#searchbtn:hover,
+#submit:hover,
+#reset-filters:hover {
+  filter: brightness(0.9);
 }
 
 .Form {
   width: 100%;
+}
+
+.list-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.list-header h3 {
+  color: var(--coffee-brown);
+  margin: 0;
+}
+
+#reset-filters {
+  background: transparent;
+  border: 1px solid var(--coffee-brown);
+  border-radius: 0.35rem;
+  color: var(--coffee-brown);
+  padding: 0.4rem 0.7rem;
+}
+
+#coffee-status {
+  color: #6f6259;
+  min-height: 1.5rem;
+}
+
+.coffee-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+
+.coffee {
+  background: var(--coffee-cream);
+  border: 1px solid var(--coffee-border);
+  border-left: 0.35rem solid var(--coffee-orange);
+  border-radius: 0.35rem;
+  padding: 1rem;
+}
+
+.coffee h4 {
+  color: var(--coffee-brown);
+  margin: 0 0 0.5rem;
+}
+
+.coffee p {
+  color: #6f6259;
+  margin: 0;
+  text-transform: capitalize;
 }
 
 html,
@@ -17,9 +84,12 @@ body {
 }
 
 body {
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(135deg, #f7ead7, #d5e8e0);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
+  color: var(--coffee-brown);
+  padding-bottom: 3rem;
+  padding-top: 2rem;
 }
 
 @keyframes gradient {

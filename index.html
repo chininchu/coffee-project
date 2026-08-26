@@ -20,12 +20,15 @@
 
     <div class="container">
       <div class="row">
-        <div class="col">
-          <h3>Coffee List</h3>
+        <div class="col-lg-7">
+          <div class="list-header">
+            <h3>Coffee List</h3>
+            <button id="reset-filters" type="button">Reset filters</button>
+          </div>
           <p id="coffee-status" aria-live="polite"></p>
-          <div id="coffee-list" aria-live="polite"></div>
+          <div id="coffee-list" class="coffee-grid" aria-live="polite"></div>
         </div>
-        <div class="col">
+        <div class="col-lg-5">
           <form id="search-form" class="Form">
             <label for="roast-selection">Roast</label>
             <select id="roast-selection" class="form-control" required>

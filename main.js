@@ -95,6 +95,7 @@ const roastSelect = document.getElementById("roast");
 const searchForm = document.getElementById("search-form");
 const addForm = document.getElementById("add-form");
 const roastSelection = document.querySelector("#roast-selection");
+const resetFiltersButton = document.getElementById("reset-filters");
 
 newCoffeeInput.addEventListener("input", () => {
   newCoffeeInput.setCustomValidity("");
@@ -142,4 +143,9 @@ const coffeeStatus = document.querySelector("#coffee-status");
 
 coffees.sort((firstCoffee, secondCoffee) => firstCoffee.id - secondCoffee.id);
 roastSelection.addEventListener("change", updateCoffees);
+resetFiltersButton.addEventListener("click", () => {
+  inputBox.value = "";
+  roastSelection.value = "All";
+  updateCoffees();
+});
 updateCoffees();
