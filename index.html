@@ -2,6 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE='; style-src 'self' https://cdn.jsdelivr.net; img-src 'self'; connect-src 'self' https://cdn.jsdelivr.net ws:; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
     <title>Better Coffee</title>
     <link rel="stylesheet" href="style.css" />
     <link
@@ -16,14 +20,18 @@
 
     <div class="container">
       <div class="row">
-        <div class="col">
-          <h3>Coffee List</h3>
-          <div id="coffee-list" aria-live="polite"></div>
+        <div class="col-lg-7">
+          <div class="list-header">
+            <h3>Coffee List</h3>
+            <button id="reset-filters" type="button">Reset filters</button>
+          </div>
+          <p id="coffee-status" aria-live="polite"></p>
+          <div id="coffee-list" class="coffee-grid" aria-live="polite"></div>
         </div>
-        <div class="col">
-          <form class="Form">
+        <div class="col-lg-5">
+          <form id="search-form" class="Form">
             <label for="roast-selection">Roast</label>
-            <select id="roast-selection" class="form-control">
+            <select id="roast-selection" class="form-control" required>
               <option>All</option>
               <option>light</option>
               <option>medium</option>
@@ -37,16 +45,19 @@
                 type="text"
                 class="form-control"
                 placeholder="Coffee Name"
+                maxlength="80"
               />
             </div>
-            <input id="searchbtn" type="button" value="Search" />
+            <button id="searchbtn" type="submit">Search</button>
+          </form>
 
+          <form id="add-form" class="Form">
             <hr />
 
             <h2 class="text-center mt-4">Add a Coffee</h2>
 
             <label for="roast">Roast</label>
-            <select id="roast" class="form-control">
+            <select id="roast" class="form-control" required>
               <option>Light</option>
               <option>Medium</option>
               <option>Dark</option>
@@ -59,9 +70,11 @@
                 class="form-control"
                 id="new-coffee-name"
                 placeholder="Coffee Name"
+                maxlength="80"
+                required
               />
             </div>
-            <input id="submit" type="button" value="Add Coffee" />
+            <button id="submit" type="submit">Add Coffee</button>
           </form>
           <h2 class="text-center mt-5">Coffee runs on sustainability</h2>
           <img

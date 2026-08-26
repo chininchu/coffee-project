@@ -15,12 +15,25 @@ improvements to it.
 
 ## TODO
 
+## Testing checklist
+
+Run the app with Live Server and verify:
+
+1. The page shows the coffee cards and a result count.
+1. Typing a search term updates the cards immediately.
+1. Selecting a roast filters the cards.
+1. Clicking **Reset filters** shows every coffee again.
+1. Adding a unique coffee displays it and keeps it after a refresh.
+1. Adding an existing name shows a validation message.
+1. Searching for `xyz` shows **No coffees found.**
+1. Entering `<img src=x onerror=alert('test')>` displays text and does not show an alert.
+
 - Update the HTML
 
-    Tables are a little old school, you need to refactor the code so that each
-    coffee is displayed in a `div` that contains a heading displaying the coffee
-    name, and the type of roast in a paragraph. Don't display the ids, these are
-    only for our application's internal use
+  Tables are a little old school, you need to refactor the code so that each
+  coffee is displayed in a `div` that contains a heading displaying the coffee
+  name, and the type of roast in a paragraph. Don't display the ids, these are
+  only for our application's internal use
 
 - When the page loads, the coffees should be sorted by their ids in ascending
   order
@@ -40,18 +53,18 @@ improvements to it.
 
 - Allow the user to add new coffees to the page
 
-    Create another form on the page that has an input for the coffee name, and
-    a select to choose the coffee roast. When the form is submitted, the new
-    coffee should appear on the page. (*Note that any new coffees you add will
-    be lost when you refresh the page, for an extra challenge, research
-    how `localStorage` works and see if you can find a way to persist the data*)
+  Create another form on the page that has an input for the coffee name, and
+  a select to choose the coffee roast. When the form is submitted, the new
+  coffee should appear on the page. (_Note that any new coffees you add will
+  be lost when you refresh the page, for an extra challenge, research
+  how `localStorage` works and see if you can find a way to persist the data_)
 
 - Style it!
 
-    The page looks pretty plain as it is, and the refactoring we did above to
-    use `div`s for coffees should give us more flexibility in styling. (*Hint:
-    the styling shown in the example below can be achieved purely with bootstrap
-    classes, that is, without custom CSS*)
+  The page looks pretty plain as it is, and the refactoring we did above to
+  use `div`s for coffees should give us more flexibility in styling. (_Hint:
+  the styling shown in the example below can be achieved purely with bootstrap
+  classes, that is, without custom CSS_)
 
 ## Example
 
